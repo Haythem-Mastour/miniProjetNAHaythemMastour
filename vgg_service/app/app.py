@@ -1,4 +1,4 @@
-# svm_service/app.py
+# vgg_service/app.py
 from flask import Flask, request, jsonify
 import time
 import os
@@ -61,7 +61,7 @@ def classify():
     uploaded_file.save(file_path)
 
     genre = predict_genre(file_path)
-    result = "Predicted Genre:" + genre
+    result = "Predicted Genre with vgg16:" + genre
 
     # Respond with the file name
     response_data = {"received_message": "File received successfully", "response": result}
