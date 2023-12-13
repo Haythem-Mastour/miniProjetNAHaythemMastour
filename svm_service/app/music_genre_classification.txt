@@ -1,0 +1,38 @@
+
+import librosa
+import numpy as np
+from tensorflow.keras.models import load_model
+
+# Load the pre-trained model
+model = load_model('./svm-classification-model.h5')
+genre_dict={0: 'blues', 1: 'classical', 2: 'country', 3: 'disco', 4: 'hiphop', 5: 'jazz', 6: 'metal', 7: 'pop', 8: 'reggae', 9: 'rock'}
+def extract_features(file_path):
+    # Load audio file with librosa
+    audio, sample_rate = librosa.load(file_path, res_type='kaiser_fast')
+    # Extract MFCCs and other features...
+    mfccs = librosa.feature.mfcc(y=audio, sr=sample_rate, n_mfcc=20)
+    mfccs_processed = np.mean(mfccs.T,axis=0)
+
+    # Add other feature extractions here if needed
+
+    return mfccs_processed
+
+def predict_genre(file_path):
+    # Extract features
+    features = extract_features(file_path)
+
+    # Reshape features to fit the model input format
+    features = np.reshape(features, (1, -1)) # Reshape for model
+
+    # Predict genre
+    prediction = model.predict(features)
+    print("Raw Prediction:", prediction)
+    # Convert prediction to genre
+    predicted_genre = np.argmax(prediction)
+    predicted_genre_name = genre_dict.get(predicted_genre, "Unknown Genre")
+    return predicted_genre_name
+
+# Usage example
+file_path = '/content/drive/MyDrive/data_docker/Data/genres_original/rock/rock.00096.wav'
+genre = predict_genre(file_path)
+print("Predicted Genre:", genre)

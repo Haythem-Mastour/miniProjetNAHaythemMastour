@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Machine Learning Prediction</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                text-align: center;
+                 background-repeat: no-repeat;
+                background-size: cover;
+                margin: 0;
+               font-family: Arial, sans-serif;
+                text-align: center;
+                background-image: url("{{ url_for('static', filename='images/image.jpg') }}");
+   
+            }
+            form {
+                background-color:white;
+                border:  2px solid;
+                margin-left: 29%;
+                margin-top: 100px;
+                flex-direction: column;
+                align-items: center;
+                width:500px;
+                padding: 30px;
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+                transition: 0.3s;
+                border-radius: 6px;
+               
+
+            }
+            input[type="file"] {
+                margin: 10px 0;
+            }
+            input[type="submit"] {
+                padding: 10px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            input[type="submit"]:hover {
+                background-color: #45a049;
+            }
+        </style>
+    </head>
+    <body>
+    
+        <h1 style="color:red;margin:50px">Classer les genres musicaux</h1>
+  
+        <form  action="/upload" method="post" enctype="multipart/form-data">
+       
+            <h2 for="data">Select an audio file:</h2>
+        </br>
+            <input type="file" name="musicFile" id="musicFile" accept=".wav" required>
+        </br></br>
+            
+            <input type="submit" value="Predict">
+        </br></br>
+        <p style="color:blue"> {{result}} </p>
+        </form>
+        <div>
+ 
+        </div>
+    </body>
+    </html>
+  
+</body>
+</html>
+
+
+

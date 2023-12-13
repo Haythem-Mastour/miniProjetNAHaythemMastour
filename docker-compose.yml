@@ -1,0 +1,35 @@
+version: '3'
+services:
+  frontend_service:
+    build:
+      context: ./frontend_service
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - shared_volume:/Nouvarch/shared_volume
+    environment:
+      - FLASK_ENV=development
+
+  svm_service:
+    build:
+      context: ./svm_service
+      dockerfile: Dockerfile
+    ports:
+      - "6000:6000"
+    volumes:
+      - shared_volume:/Nouvarch/shared_volume
+    depends_on:
+      - frontend_service
+  vgg_service:
+    build:
+      context: ./vgg_service
+      dockerfile: Dockerfile
+    ports:
+      - "7000:7000"
+    volumes:
+      - shared_volume:/Nouvarch/shared_volume
+    depends_on:
+      - frontend_service 
+volumes:
+  shared_volume:
