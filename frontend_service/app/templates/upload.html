@@ -48,6 +48,13 @@
             input[type="submit"]:hover {
                 background-color: #45a049;
             }
+            select {
+                padding: 8px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                cursor: pointer;
+            }
         </style>
     </head>
     <body>
@@ -60,7 +67,13 @@
         </br>
             <input type="file" name="musicFile" id="musicFile" accept=".wav" required>
         </br></br>
-            
+        <label for="selectOptions">Choose an option:</label>
+        <select id="selectOptions" name="options">
+            <option value="svn">SVN</option>
+            <option value="vgg">VGG</option>
+
+        </select>
+    </br>
             <input type="submit" value="Predict">
         </br></br>
         <p style="color:blue"> {{result}} </p>
