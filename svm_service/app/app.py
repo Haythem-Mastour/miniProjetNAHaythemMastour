@@ -61,7 +61,7 @@ def classify():
     uploaded_file.save(file_path)
 
     genre = predict_genre(file_path)
-    result = "Predicted Genre with svm:" + genre
+    result = "Predicted Genre with svm :" + genre
 
     # Respond with the file name
     response_data = {"received_message": "File received successfully", "response": result}
