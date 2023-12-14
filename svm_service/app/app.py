@@ -27,45 +27,25 @@ def get_latest_audio_file(directory):
         return None
 
 def extract_features(file_path):
-    # Load audio file with librosa
     audio, sample_rate = librosa.load(file_path, res_type='kaiser_fast')
-    # Extract MFCCs and other features...
     mfccs = librosa.feature.mfcc(y=audio, sr=sample_rate, n_mfcc=20)
     mfccs_processed = np.mean(mfccs.T,axis=0)
-
     return mfccs_processed
-
 def predict_genre(file_path):
-    # Extract features
     features = extract_features(file_path)
-
-    # Reshape features to fit the model input format
-    features = np.reshape(features, (1, -1)) # Reshape for model
-
-    # Predict genre
+    features = np.reshape(features, (1, -1)) 
     prediction = model.predict(features)
-    print("Raw Prediction:", prediction)
-    # Convert prediction to genre
     predicted_genre = np.argmax(prediction)
     predicted_genre_name = genre_dict.get(predicted_genre, "Unknown Genre")
     return predicted_genre_name
-
-
 @app.route('/classify', methods=['POST'])
 def classify():
-    # Get the uploaded file from the request
     uploaded_file = request.files['musicFile']
-      
-    # Save the file to the shared volume
     file_path = '/Nouvarch/shared_volume/' + uploaded_file.filename
     uploaded_file.save(file_path)
-
     genre = predict_genre(file_path)
-    result = "Predicted Genre with svm :" + genre
-
-    # Respond with the file name
+    result = "Predicted Genre   :" + genre
     response_data = {"received_message": "File received successfully", "response": result}
     return jsonify(response_data)
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=6000)
